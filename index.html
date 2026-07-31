@@ -7,6 +7,86 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
     <style>
+    /* --- Floating Support Button Styles --- */
+    .floating-support-container {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 15px;
+    }
+    
+    .support-menu {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 12px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(20px) scale(0.9);
+    transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    pointer-events: none;
+    }
+    
+    .support-menu.open {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0) scale(1);
+    pointer-events: auto;
+    }
+    
+    .support-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background-color: #1A1C23; 
+    color: #ffffff;
+    text-decoration: none;
+    padding: 12px 24px;
+    border-radius: 30px; 
+    font-size: 17px;
+    font-weight: 500;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+    transition: transform 0.2s, background 0.2s;
+    }
+    
+    .support-item:hover {
+    transform: scale(1.05);
+    background-color: #2D3748;
+    }
+    
+    .support-item.messenger i { color: #00B2FF; font-size: 22px; }
+    .support-item.whatsapp i { color: #25D366; font-size: 22px; }
+    .support-item.call i { color: #4285F4; font-size: 20px; }
+    
+    .support-toggle {
+    width: 65px;
+    height: 65px;
+    background-color: #4A5A80; 
+    color: white;
+    border: none;
+    border-radius: 20px; 
+    font-size: 30px;
+    cursor: pointer;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s ease;
+    }
+    
+    .support-toggle:hover {
+    background-color: #3b4a6b;
+    transform: scale(1.05);
+    }
+    
+    .support-toggle i {
+    transition: transform 0.3s ease;
+    }
+    
         :root {
             --primary: #1B365D;   
             --accent: #E53E3E;    
@@ -26,7 +106,6 @@
 
         body { color: var(--text); background-color: var(--white); line-height: 1.6; }
 
-        /* নেভিগেশন বার */
         .navbar { display: flex; justify-content: space-between; align-items: center; padding: 15px 5%; background-color: var(--nav-bg); position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.05); border-bottom: 1px solid #E2E8F0; }
         .logo a { text-decoration: none; }
         .logo-text { font-size: 26px; font-weight: 800; color: var(--primary); letter-spacing: 1.5px; display: flex; align-items: center; gap: 5px; }
@@ -37,26 +116,22 @@
         .nav-links a { color: var(--primary); text-decoration: none; font-size: 16px; font-weight: 600; transition: color 0.2s; }
         .nav-links a:hover { color: var(--accent); }
 
-        /* হিরো ব্যানার */
         .hero { padding: 80px 20px; background: linear-gradient(rgba(27, 54, 93, 0.9), rgba(27, 54, 93, 0.95)), url('https://images.unsplash.com/photo-1635070041078-e363dbe005cb?auto=format&fit=crop&w=800&q=80') no-repeat center center/cover; text-align: center; color: var(--white); }
         .hero h1 { font-size: 36px; margin-bottom: 15px; font-weight: 700; }
         .hero p { font-size: 18px; max-width: 600px; margin: 0 auto 35px auto; color: #E2E8F0; }
         .btn-primary { display: inline-block; padding: 14px 32px; background-color: var(--accent); color: var(--white); text-decoration: none; border-radius: 5px; font-weight: bold; box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: transform 0.2s; }
         .btn-primary:hover { transform: translateY(-2px); }
 
-        /* সেকশন জেনারেল স্টাইল */
         .section { padding: 60px 5%; }
         .section-title { text-align: center; margin-bottom: 40px; }
         .section-title h2 { font-size: 28px; color: var(--primary); }
         .underline { width: 60px; height: 4px; background-color: var(--accent); margin: 8px auto 0 auto; border-radius: 2px; }
 
-        /* বৈশিষ্ট্য সেকশন */
         .feature-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 25px; }
         .feature-card { text-align: center; padding: 35px 20px; background-color: var(--bg-light); border-radius: 8px; border: 1px solid #E2E8F0; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
         .feature-card i { font-size: 45px; color: var(--accent); margin-bottom: 15px; }
         .feature-card h3 { margin-bottom: 12px; color: var(--primary); font-size: 20px; }
 
-        /* ব্যাচসমূহ সেকশন */
         .courses { background-color: var(--bg-light); }
         .course-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; }
         .course-card { background-color: var(--white); padding: 25px; border-radius: 8px; border: 1px solid #E2E8F0; box-shadow: 0 4px 6px rgba(0,0,0,0.05); transition: transform 0.2s; }
@@ -67,14 +142,12 @@
         .course-card li { margin-bottom: 10px; display: flex; align-items: center; font-size: 14px; }
         .course-card li i { color: #388E3C; margin-right: 10px; font-size: 15px; }
 
-        /* NCTB বই ডাউনলোড সেকশন */
         .nctb-section { background-color: #EBF8FF; border: 2px dashed #63B3ED; border-radius: 10px; text-align: center; padding: 40px 20px; margin-top: 20px; }
         .nctb-section h3 { color: #2B6CB0; font-size: 22px; margin-bottom: 10px; }
         .nctb-section p { font-size: 16px; color: #4A5568; margin-bottom: 20px; }
         .btn-nctb { display: inline-block; padding: 12px 28px; background-color: #3182CE; color: var(--white); text-decoration: none; border-radius: 5px; font-weight: bold; font-size: 16px; transition: background 0.2s; }
         .btn-nctb:hover { background-color: #2B6CB0; }
 
-        /* ফর্ম, কন্টাক্ট এবং অন্যান্য */
         .contact-container { display: flex; flex-direction: column; gap: 30px; }
         @media (min-width: 992px) { .contact-container { display: grid; grid-template-columns: 1fr 1fr; } }
         .payment-methods { background-color: var(--bg-light); padding: 25px; border-radius: 8px; border: 1px solid #E2E8F0; height: max-content; }
@@ -94,7 +167,6 @@
         .btn-submit:hover { background-color: #122543; }
         .footer { background-color: var(--primary); color: #A0AEC0; text-align: center; padding: 25px; font-size: 14px; border-top: 3px solid var(--accent); }
 
-        /* টুলস ও পপআপ স্টাইল */
         .container-tools { max-width: 450px; margin: auto; background: #fff; padding: 25px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
         .container-tools input, .container-tools select, .container-tools button { width: 100%; padding: 12px; margin: 8px 0; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; }
         .container-tools button { background: #1B365D; color: white; border: none; cursor: pointer; font-weight: bold; }
@@ -102,6 +174,33 @@
         @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
         .star-blink { color: #FFD700; font-size: 20px; animation: blink 1s infinite; margin-right: 5px; }
         .popup-box { display: none; position: fixed; top: 20%; left: 10%; right: 10%; z-index: 1000; padding: 20px; background: #fffaf0; border: 2px solid #ECC94B; border-radius: 10px; box-shadow: 0 10px 20px rgba(0,0,0,0.3); text-align: center; }
+
+        /* --- Modern CSS Marquee Styles --- */
+        .marquee-container {
+            width: 100%;
+            background: #c0392b;
+            padding: 10px;
+            overflow: hidden;
+            white-space: nowrap;
+            box-sizing: border-box;
+            color: white;
+            font-weight: bold;
+        }
+
+        .marquee-text {
+            display: inline-block;
+            animation: marquee-anim 15s linear infinite; 
+        }
+
+        .marquee-container:hover .marquee-text {
+            animation-play-state: paused;
+            cursor: pointer;
+        }
+
+        @keyframes marquee-anim {
+            from { transform: translateX(100vw); }
+            to { transform: translateX(-100%); }
+        }
 
         @media (max-width: 768px) {
             .nav-links { display: none; }
@@ -114,12 +213,12 @@
 </head>
 <body>
 
-<div style="width: 100%; background: #c0392b; padding: 10px; overflow: hidden; white-space: nowrap; box-sizing: border-box; color: white; font-weight: bold;">
-    <marquee id="scrolling-notice" scrollamount="6">লোড হচ্ছে...</marquee>
+<!-- Updated Marquee Section -->
+<div class="marquee-container">
+    <div id="scrolling-notice" class="marquee-text">লোড হচ্ছে...</div>
 </div>
 
 <script>
-    // আপনার গুগল শিটের CSV লিঙ্ক
     const url = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTTK5qG19U2iuZbDZh-zeLqstVPZEC5yS5zbwXGRXFteE5Atks5EKqS1wrg2dVwBSPNbGCBl6QHIeOl/pub?gid=0&single=true&output=csv';
 
     fetch(url + '&t=' + new Date().getTime())
@@ -261,7 +360,6 @@
         </div>
     </div>
 </section>
-
 <section id="books" class="section">
     <div class="section-title">
         <h2>পাঠ্যপুস্তক ডাউনলোড</h2>
@@ -404,7 +502,6 @@
             </footer>
             
             <script>
-            // --- সেশন ও টুলস লজিক (পাসওয়ার্ড সেভ রাখা) ---
             document.addEventListener("DOMContentLoaded", function() {
             if(sessionStorage.getItem("id_unlocked") === "true") {
             document.getElementById("id-login").style.display = "none";
@@ -416,7 +513,6 @@
             }
             });
             
-            // কোড জেনারেটর লগিক
             function checkIdPass() { 
             if(document.getElementById("id-pass").value==="m@thlabkeats") {
             sessionStorage.setItem("id_unlocked", "true");
@@ -434,7 +530,6 @@
             document.getElementById("hidden-code").value = code;
             document.getElementById("code-result").style.display = "block";
             
-            // গুগল শিট ডাবল এন্ট্রি প্রটেকশন সাবমিট হ্যান্ডলার
             document.getElementById("id-form").onsubmit = async (e) => {
             e.preventDefault();
             const btn = document.getElementById("code-submit-btn");
@@ -445,7 +540,7 @@
             let result = await response.json();
             
             if(result.status === "duplicate") {
-            alert(result.message); // এই মাসে অলরেডি কোড নিয়ে থাকলে
+            alert(result.message); 
             btn.innerText = "সেভ করুন"; btn.disabled = false;
             } else if (result.status === "success") {
             e.target.innerHTML = `<div class="success-box"><h3>অভিনন্দন!</h3><p>${result.message}</p></div>`;
@@ -458,7 +553,6 @@
             };
             }
             
-            // হাজিরা লগিক
             function checkAttPass() { 
             if(document.getElementById("att-pass").value==="m@thlabkeats") {
             sessionStorage.setItem("att_unlocked", "true");
@@ -472,7 +566,7 @@
             document.getElementById('att-form-div').style.display = 'block';
             document.getElementById('selected-class').value = cls;
             }
-            // গুগল শিট হাজিরা সাবমিট হ্যান্ডলার
+
             document.getElementById("att-form").onsubmit = async (e) => {
             e.preventDefault();
             const btn = document.getElementById("att-submit-btn");
@@ -483,7 +577,7 @@
             let result = await response.json();
             
             if(result.status === "duplicate") {
-            alert(result.message); // আজকে অলরেডি হাজিরা দিয়ে থাকলে
+            alert(result.message); 
             btn.innerText = "হাজিরা জমা দিন"; btn.disabled = false;
             } else if (result.status === "success") {
             e.target.parentElement.innerHTML = `<div class="success-box"><h3>উপস্থিতি নিশ্চিত!</h3><p>${result.message}</p></div>`;
@@ -495,9 +589,6 @@
             }
             };
             
-            
-            
-            // --- পেমেন্ট ফর্ম ও প্রিন্ট লজিক ---
             document.addEventListener("DOMContentLoaded", function() {
             var yearSelect = document.getElementById("yearSelect");
             var startYear = 2024; 
@@ -613,7 +704,85 @@
             submitBtn.innerText = "তথ্য সাবমিট ও প্রিন্ট করুন"; submitBtn.disabled = false;
             });
             }
+            
+            function toggleSupport() {
+            const menu = document.getElementById('supportMenu');
+            const icon = document.getElementById('supportIcon');
+            
+            menu.classList.toggle('open');
+            
+            if (menu.classList.contains('open')) {
+            icon.classList.remove('fa-headset');
+            icon.classList.add('fa-xmark');
+            icon.style.transform = "rotate(90deg)"; 
+            } else {
+            icon.classList.remove('fa-xmark');
+            icon.classList.add('fa-headset');
+            icon.style.transform = "rotate(0deg)";
+            }
+            }
+            
             </script>
             
+            <!-- Floating Support Section -->
+            <div class="floating-support-container">
+            <div class="support-menu" id="supportMenu">
+            <!-- Updated Messenger Link -->
+            <a href="https://www.facebook.com/share/1BobMbwy63/" target="_blank" class="support-item messenger">
+            <i class="fab fa-facebook-messenger"></i> Messenger
+            </a>
+            
+            <a href="https://wa.me/8801317327284" target="_blank" class="support-item whatsapp">
+            <i class="fab fa-whatsapp"></i> WhatsApp
+            </a>
+            
+            <a href="tel:+8801763201299" class="support-item call">
+            <i class="fas fa-headset"></i> Contact Support
+            </a>
+            </div>
+            
+            <button class="support-toggle" onclick="toggleSupport()">
+            <i class="fas fa-headset" id="supportIcon"></i>
+            </button>
+            </div>
+            
             </body>
+            </html>
+le.transform = "rotate(90deg)"; // এনিমেশন ইফেক্ট
+            } else {
+            icon.classList.remove('fa-xmark');
+            icon.classList.add('fa-headset');
+            icon.style.transform = "rotate(0deg)";
+            }
+            }
+            
+            </script>
+            
+            <!-- Floating Support Section -->
+            <div class="floating-support-container">
+            <div class="support-menu" id="supportMenu">
+            <!-- Messenger Link (https://www.facebook.com/share/1BobMbwy63/) -->
+            <a href="https://m.me/yourusername" target="_blank" class="support-item messenger">
+            <i class="fab fa-facebook-messenger"></i> Messenger
+            </a>
+            
+            <!-- WhatsApp Link (আপনার নাম্বার দেওয়া হয়েছে) -->
+            <a href="https://wa.me/8801763201299" target="_blank" class="support-item whatsapp">
+            <i class="fab fa-whatsapp"></i> WhatsApp
+            </a>
+            
+            <!-- Call Support Link -->
+            <a href="tel:+8801763201299" class="support-item call">
+            <i class="fas fa-headset"></i> Contact Support
+            </a>
+            </div>
+            
+            <!-- Main Button -->
+            <button class="support-toggle" onclick="toggleSupport()">
+            <i class="fas fa-headset" id="supportIcon"></i>
+            </button>
+            </div>
+            
+            </body>
+            </html>  </body>
             </html>
